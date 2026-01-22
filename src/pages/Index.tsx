@@ -5,6 +5,7 @@ import BalanceCard from "@/components/BalanceCard";
 import PaymentCard from "@/components/PaymentCard";
 import QuickAction from "@/components/QuickAction";
 import TransactionItem from "@/components/TransactionItem";
+import PhoneFrame from "@/components/PhoneFrame";
 
 const quickActions = [
   { icon: Send, label: "Send", color: "blue" as const },
@@ -63,8 +64,9 @@ const transactions = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background pb-24">
-      <Header />
+    <PhoneFrame>
+      <div className="min-h-full bg-background pb-24">
+        <Header />
 
       <main className="container mx-auto px-4 py-6">
         {/* Balance Section */}
@@ -162,8 +164,9 @@ const Index = () => {
         </section>
       </main>
 
-      <BottomNav />
-    </div>
+        <BottomNav />
+      </div>
+    </PhoneFrame>
   );
 };
 
