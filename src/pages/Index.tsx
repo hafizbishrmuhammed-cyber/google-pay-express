@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Send, Download, Smartphone, Receipt, Wallet, Building } from "lucide-react";
 import Header from "@/components/Header";
 import BottomNav from "@/components/BottomNav";
@@ -6,6 +7,8 @@ import PaymentCard from "@/components/PaymentCard";
 import QuickAction from "@/components/QuickAction";
 import TransactionItem from "@/components/TransactionItem";
 import PhoneFrame from "@/components/PhoneFrame";
+import PaymentFlow from "@/components/PaymentFlow";
+import PaymentNotification from "@/components/PaymentNotification";
 
 const quickActions = [
   { icon: Send, label: "Send", color: "blue" as const },
@@ -63,10 +66,37 @@ const transactions = [
 ];
 
 const Index = () => {
+  const [paymentOpen, setPaymentOpen] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+
+  const handleQuickAction = (label: string) => {
+    if (label === "Send") {
+      setPaymentOpen(true);
+    }
+  };
+
   return (
     <PhoneFrame>
       <div className="min-h-full bg-background pb-24">
         <Header />
+
+        {/* Payment Flow Modal */}
+        <PaymentFlow
+          isOpen={paymentOpen}
+          onClose={() => setPaymentOpen(false)}
+          amount={1499}
+          merchantName="Swiggy"
+          cardLast4="6789"
+          cardType="visa"
+        />
+
+        {/* Payment Notification */}
+        <PaymentNotification
+          isVisible={showNotification}
+          amount={1499}
+          recipientName="Rahul"
+          onClose={() => setShowNotification(false)}
+        />
 
       <main className="container mx-auto px-4 py-6">
         {/* Balance Section */}
@@ -86,6 +116,7 @@ const Index = () => {
                 icon={action.icon}
                 label={action.label}
                 color={action.color}
+                onClick={() => handleQuickAction(action.label)}
               />
             ))}
           </div>
